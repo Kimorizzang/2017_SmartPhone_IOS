@@ -31,6 +31,9 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
     // 저장 문자열 변수
     var careNm = NSMutableString()
     var careRegNo = NSMutableString()
+    var list: [NSMutableString] = []
+    
+    var selectedRow = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,18 +51,14 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
                 if let viewController_CatImage = segue.destination as? ViewController_CatImage {
                     viewController_CatImage.orgCd = self.orgCd
                     viewController_CatImage.uprCd = self.uprCd
+                    viewController_CatImage.careRegNo = self.list[selectedRow] as String
+                    
+                    print("[3] uprCd: \(uprCd)")
+                    print("[3] orgCd: \(orgCd)")
+                    print("[3] careRegNo: \(self.list[selectedRow])")
+                    print("[3] viewController_CatImage.careRegNo: \(viewController_CatImage.careRegNo)")
                     }
                 }
-                
-                /*
-                if let detailCareTableViewController = segue.destination as? DetailCareTableViewController {
-                    detailCareTableViewController.orgCd = self.orgCd
-                    detailCareTableViewController.uprCd = self.uprCd
-                    detailCareTableViewController.careRegNo = self.careRegNo as String
-                }
-                 */
-            
-        
         }
     
     
@@ -84,7 +83,21 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
         
         cell.textLabel?.text = (posts.object(at: indexPath.row) as AnyObject).value(forKey: "careNm") as! NSString as String
         cell.detailTextLabel?.text = (posts.object(at: indexPath.row) as AnyObject).value(forKey: "careRegNo") as! NSString as String
+        
         return cell as UITableViewCell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedRow = indexPath.row
+        for i in 0..<list.count {
+            if indexPath.row == i{
+                self.careRegNo = list[i]
+            }
+        }
+        
+        print("전")
+        self.performSegue(withIdentifier: "segueToCatImageUrlViewController", sender: self)
+        print("후")
     }
     
     func beginParsing()
@@ -95,6 +108,7 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
         parser.delegate = self
         parser.parse()
         taData.reloadData()
+        
     }
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String])
@@ -115,9 +129,11 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
     {
         if element.isEqual(to: "careNm"){
             careNm.append(string)
+            
         }
         else if element.isEqual(to: "careRegNo"){
             careRegNo.append(string)
+            list.append(careRegNo)
         }
     }
     
@@ -137,50 +153,5 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
             posts.add(elements)
         }
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

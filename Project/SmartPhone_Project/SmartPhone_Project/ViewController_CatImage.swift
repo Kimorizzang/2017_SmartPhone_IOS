@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController_CatImage: UIViewController, XMLParserDelegate {
+class ViewController_CatImage: UITableViewController, XMLParserDelegate {
 
     @IBOutlet weak var taData: UITableView!
     
@@ -23,34 +23,61 @@ class ViewController_CatImage: UIViewController, XMLParserDelegate {
     var resultUrl = ""
     var uprCd : String = ""
     var orgCd : String = ""
-    var careRegNo : String = ""
+    var careRegNo: String = ""
+    var careAddr: String = ""
+    var careAddrs: [String] = []
+    var careTel: String = ""
+    var careTels: [String] = []
+    var list: [NSMutableString] = []
     
     var imageurl = NSMutableString()
     
+    var selectedRow: Int = 0
+    
+    override func viewWillAppear(_ animated: Bool) {
+
+        beginParsing()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        beginParsing()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
+        if segue.identifier == "segueToDetailView" {
+         if let detailCareTableViewController = segue.destination as? DetailCareTableViewController {
+            detailCareTableViewController.orgCd = self.orgCd
+            detailCareTableViewController.uprCd = self.uprCd
+            detailCareTableViewController.careRegNo = self.careRegNo
+            detailCareTableViewController.backProfile = self.imageurl
+            detailCareTableViewController.selectedRow = self.selectedRow
+            
+            print("[4] uprCd: \(uprCd)")
+            print("[4] orgCd: \(orgCd)")
+            print("[4] careRegNo: \(careRegNo)")
+            print("[4] imageurl: \(imageurl)")
+            print("[4] selectedRow: \(selectedRow)")
+            }
+        }
+    }
     
     func beginParsing()
     {
         posts = []
-        
-        //url = url + "upr_cd=" + self.uprCd + "&org_cd=" + self.orgCd + "&care_reg_no=" + self.careRegNo + key
-        resultUrl = url + "upr_cd=" + self.uprCd + "&org_cd=" + self.orgCd + key
+
+        // 품종코드 고양이 = 422400
+        resultUrl = url + "upkind=422400&upr_cd=" + self.uprCd + "&org_cd=" + self.orgCd + "&care_reg_no="
+            + self.careRegNo +  key
         
         parser = XMLParser(contentsOf:(URL(string:resultUrl))!)!
         parser.delegate = self
         parser.parse()
         taData!.reloadData()
-        
     }
     
     
@@ -66,15 +93,23 @@ class ViewController_CatImage: UIViewController, XMLParserDelegate {
         }
     }
     
-    func parser(_ parser: XMLParser, foundCharacters string: String!)
+    func parser(_ parser: XMLParser, foundCharacters string: String)
     {
         if element.isEqual(to: "popfile"){
             imageurl.append(string)
-            print(imageurl)
+            list.append(imageurl)
+        }
+        else if element.isEqual(to: "careAddr") {
+            careAddr.append(string)
+            careAddrs.append(string)
+        }
+        else if element.isEqual(to: "careTel") {
+            careTel.append(string)
+            careTels.append(string)
         }
     }
     
-    func parser(_ parser: XMLParser, didEndElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!)
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?)
     {
         if (elementName as NSString).isEqual(to: "item")
         {
@@ -82,33 +117,64 @@ class ViewController_CatImage: UIViewController, XMLParserDelegate {
             {
                 elements.setObject(imageurl, forKey: "popfile" as NSCopying)
             }
-            
+            if !careAddr.isEqual(nil)
+            {
+                elements.setObject(careAddr, forKey: "careAddr" as NSCopying)
+            }
+            if !careTel.isEqual(nil)
+            {
+                elements.setObject(careTel, forKey: "careTel" as NSCopying)
+            }
             posts.add(elements)
         }
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)->Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)->Int {
         return posts.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "CatCell")!
+        
         if(cell.isEqual(NSNull)) {
             cell = Bundle.main.loadNibNamed("CatCell", owner: self, options: nil)?[0] as! UITableViewCell
         }
         
-        if let url = URL(string: (posts.object(at: indexPath.row) as AnyObject).value(forKey: "popfile") as! NSString as String) {
-            if let data = try? Data(contentsOf: url) {
-                cell.imageView!.image = UIImage(data: data)
-            }
+        cell.textLabel?.numberOfLines = 2
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
+        cell.textLabel?.text = "주소 : \(careAddrs[indexPath.row])\n전화번호 : \(careTels[indexPath.row])"
+        
+        if let url = URL.init(string: (posts.object(at: indexPath.row) as AnyObject).value(forKey: "popfile") as! NSString as String) {
+            let data = try? Data(contentsOf: url)
+            let image = UIImage.init(data: data!)
+            cell.imageView?.image = resizeImage(image: image!, newWidth: 150.0)
         }
         
         return cell as UITableViewCell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.selectedRow = indexPath.row
+        
+        for i in 0..<list.count {
+            if indexPath.row == i{
+                self.imageurl = list[i]
+            }
+        }
+        
+        self.performSegue(withIdentifier: "segueToDetailView", sender: self)
+    }
+    
+    func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage? {
+        
+        let scale = newWidth / image.size.width
+        let newHeight = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
     }
 }

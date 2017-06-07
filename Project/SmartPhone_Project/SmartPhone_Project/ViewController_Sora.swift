@@ -34,6 +34,7 @@ class ViewController_Sora: UIViewController, UIPickerViewDataSource, UIPickerVie
         if segue.identifier == "segueToViewController" {
             if let guViewController = segue.destination as? GuViewController {
                 guViewController.uprCd = uprCd
+                print("[1] uprCd: \(uprCd)")
             }
         }
     }

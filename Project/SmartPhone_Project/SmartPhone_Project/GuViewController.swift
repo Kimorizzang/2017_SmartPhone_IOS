@@ -14,7 +14,7 @@ class GuViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
 
     
     // ViewController로부터 segue를 통해 전달받은 시 코드
-    var uprCd : String?
+    var uprCd : String = ""
     
     var url : String = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/sigungu?upr_cd="
     
@@ -24,7 +24,7 @@ class GuViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
     var posts = NSMutableArray()
     var elements = NSMutableDictionary()
     var element = NSString()
-    var orgCd : String?
+    var orgCd : String = ""
     var orgdownNm = NSMutableString()
     
     var list: [String] = []
@@ -97,15 +97,18 @@ class GuViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any!){
         if segue.identifier == "segueToCareNmViewController" {
             if let careNameViewController = segue.destination as? CareNameTableViewController {
-                careNameViewController.uprCd = uprCd!
-                careNameViewController.orgCd = orgCd!
+                careNameViewController.uprCd = uprCd
+                careNameViewController.orgCd = orgCd
+                
+                print("[2] uprCd: \(uprCd)")
+                print("[2] orgCd: \(orgCd)")
             }
         }
     }
     
     func beginParsing()
     {
-        url = url + uprCd! + key
+        url = url + uprCd + key
         posts = []
         parser = XMLParser(contentsOf:(URL(string:url))!)!
         parser.delegate = self
