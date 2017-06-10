@@ -20,6 +20,8 @@
 		A10C2FC51EDB2DE700D901D4 /* ViewController_CatImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C2FC01EDB2DE700D901D4 /* ViewController_CatImage.swift */; };
 		A10C2FC61EDB2DE700D901D4 /* ViewController_Sora.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C2FC11EDB2DE700D901D4 /* ViewController_Sora.swift */; };
 		A17780B81EE7E5F500DD4EAB /* ViewController_CatDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17780B71EE7E5F500DD4EAB /* ViewController_CatDetail.swift */; };
+		A1852B2B1EEBCF0F0080A90A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1852B2A1EEBCF0F0080A90A /* MapViewController.swift */; };
+		A1852B2D1EEBCF5D0080A90A /* Care.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1852B2C1EEBCF5D0080A90A /* Care.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		A10C2FC01EDB2DE700D901D4 /* ViewController_CatImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_CatImage.swift; sourceTree = "<group>"; };
 		A10C2FC11EDB2DE700D901D4 /* ViewController_Sora.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_Sora.swift; sourceTree = "<group>"; };
 		A17780B71EE7E5F500DD4EAB /* ViewController_CatDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_CatDetail.swift; sourceTree = "<group>"; };
+		A1852B2A1EEBCF0F0080A90A /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		A1852B2C1EEBCF5D0080A90A /* Care.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Care.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,8 @@
 				A10502C91ED038C50016FC5A /* SecondViewController.swift */,
 				A1070DE91ED301F20062A3E3 /* ThirdViewController.swift */,
 				A10502BB1ED01E2A0016FC5A /* Main.storyboard */,
+				A1852B2A1EEBCF0F0080A90A /* MapViewController.swift */,
+				A1852B2C1EEBCF5D0080A90A /* Care.swift */,
 				A10502BE1ED01E2A0016FC5A /* Assets.xcassets */,
 				A10502C01ED01E2A0016FC5A /* LaunchScreen.storyboard */,
 				A10502C31ED01E2A0016FC5A /* Info.plist */,
@@ -161,9 +167,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1852B2B1EEBCF0F0080A90A /* MapViewController.swift in Sources */,
 				A10502CA1ED038C50016FC5A /* SecondViewController.swift in Sources */,
 				A10C2FC51EDB2DE700D901D4 /* ViewController_CatImage.swift in Sources */,
 				A10C2FC31EDB2DE700D901D4 /* DetailCareTableViewController.swift in Sources */,
+				A1852B2D1EEBCF5D0080A90A /* Care.swift in Sources */,
 				A10502BA1ED01E2A0016FC5A /* ViewController.swift in Sources */,
 				A10C2FC61EDB2DE700D901D4 /* ViewController_Sora.swift in Sources */,
 				A1070DEA1ED301F20062A3E3 /* ThirdViewController.swift in Sources */,

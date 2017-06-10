@@ -69,6 +69,12 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
             print("[4] selectedRow: \(selectedRow)")
             }
         }
+        
+        if segue.identifier == "segueToMapview" {
+            if let mapViewController = segue.destination as? MapViewController {
+                mapViewController.careAddr = self.careAddr
+            }
+        }
     }
     
     func beginParsing()
@@ -78,6 +84,8 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
         // 품종코드 고양이 = 422400
         resultUrl = url + "upkind=422400&upr_cd=" + self.uprCd + "&org_cd=" + self.orgCd + "&care_reg_no="
             + self.careRegNo +  key
+        
+        print(resultUrl)
         
         parser = XMLParser(contentsOf:(URL(string:resultUrl))!)!
         parser.delegate = self
