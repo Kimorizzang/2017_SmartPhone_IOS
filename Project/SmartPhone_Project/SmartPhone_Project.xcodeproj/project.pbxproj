@@ -19,6 +19,7 @@
 		A10C2FC41EDB2DE700D901D4 /* GuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C2FBF1EDB2DE700D901D4 /* GuViewController.swift */; };
 		A10C2FC51EDB2DE700D901D4 /* ViewController_CatImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C2FC01EDB2DE700D901D4 /* ViewController_CatImage.swift */; };
 		A10C2FC61EDB2DE700D901D4 /* ViewController_Sora.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10C2FC11EDB2DE700D901D4 /* ViewController_Sora.swift */; };
+		A17780B81EE7E5F500DD4EAB /* ViewController_CatDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17780B71EE7E5F500DD4EAB /* ViewController_CatDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		A10C2FBF1EDB2DE700D901D4 /* GuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuViewController.swift; sourceTree = "<group>"; };
 		A10C2FC01EDB2DE700D901D4 /* ViewController_CatImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_CatImage.swift; sourceTree = "<group>"; };
 		A10C2FC11EDB2DE700D901D4 /* ViewController_Sora.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_Sora.swift; sourceTree = "<group>"; };
+		A17780B71EE7E5F500DD4EAB /* ViewController_CatDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_CatDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				A10C2FBE1EDB2DE700D901D4 /* DetailCareTableViewController.swift */,
 				A10C2FBF1EDB2DE700D901D4 /* GuViewController.swift */,
 				A10C2FC01EDB2DE700D901D4 /* ViewController_CatImage.swift */,
+				A17780B71EE7E5F500DD4EAB /* ViewController_CatDetail.swift */,
 				A10C2FC11EDB2DE700D901D4 /* ViewController_Sora.swift */,
 				A10502B71ED01E2A0016FC5A /* AppDelegate.swift */,
 				A10502B91ED01E2A0016FC5A /* ViewController.swift */,
@@ -164,6 +167,7 @@
 				A10502BA1ED01E2A0016FC5A /* ViewController.swift in Sources */,
 				A10C2FC61EDB2DE700D901D4 /* ViewController_Sora.swift in Sources */,
 				A1070DEA1ED301F20062A3E3 /* ThirdViewController.swift in Sources */,
+				A17780B81EE7E5F500DD4EAB /* ViewController_CatDetail.swift in Sources */,
 				A10C2FC41EDB2DE700D901D4 /* GuViewController.swift in Sources */,
 				A10502B81ED01E2A0016FC5A /* AppDelegate.swift in Sources */,
 				A10C2FC21EDB2DE700D901D4 /* CareNameTableViewController.swift in Sources */,

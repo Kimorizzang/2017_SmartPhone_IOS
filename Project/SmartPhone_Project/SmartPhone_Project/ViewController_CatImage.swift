@@ -28,6 +28,11 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
     var careAddrs: [String] = []
     var careTel: String = ""
     var careTels: [String] = []
+    var colorCd: String = ""
+    var colorCds: [String] = []
+    var processState: String = ""
+    var processStates: [String] = []
+    
     var list: [NSMutableString] = []
     
     var imageurl = NSMutableString()
@@ -50,7 +55,7 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if segue.identifier == "segueToDetailView" {
-         if let detailCareTableViewController = segue.destination as? DetailCareTableViewController {
+         if let detailCareTableViewController = segue.destination as? ViewController_CatDetail {
             detailCareTableViewController.orgCd = self.orgCd
             detailCareTableViewController.uprCd = self.uprCd
             detailCareTableViewController.careRegNo = self.careRegNo
@@ -90,6 +95,7 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
             elements = [:]
             imageurl = NSMutableString()
             imageurl = ""
+            
         }
     }
     
@@ -106,6 +112,14 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
         else if element.isEqual(to: "careTel") {
             careTel.append(string)
             careTels.append(string)
+        }
+        else if element.isEqual(to: "colorCd") {
+            colorCd.append(string)
+            colorCds.append(string)
+        }
+        else if element.isEqual(to: "processState") {
+            processState.append(string)
+            processStates.append(string)
         }
     }
     
@@ -125,6 +139,12 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
             {
                 elements.setObject(careTel, forKey: "careTel" as NSCopying)
             }
+            if !colorCd.isEqual(nil) {
+                elements.setObject(colorCd, forKey: "colorCd" as NSCopying)
+            }
+            if !processState.isEqual(nil) {
+                elements.setObject(processState, forKey: "processState" as NSCopying)
+            }
             posts.add(elements)
         }
     }
@@ -140,9 +160,9 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
             cell = Bundle.main.loadNibNamed("CatCell", owner: self, options: nil)?[0] as! UITableViewCell
         }
         
-        cell.textLabel?.numberOfLines = 2
+        cell.textLabel?.numberOfLines = 5
         cell.textLabel?.adjustsFontSizeToFitWidth = true
-        cell.textLabel?.text = "주소 : \(careAddrs[indexPath.row])\n전화번호 : \(careTels[indexPath.row])"
+        cell.textLabel?.text = "주소 : \(careAddrs[indexPath.row])\n전화번호 : \(careTels[indexPath.row])\n색상: \(colorCds[indexPath.row])\n보호 상태: \(processStates[indexPath.row])"
         
         if let url = URL.init(string: (posts.object(at: indexPath.row) as AnyObject).value(forKey: "popfile") as! NSString as String) {
             let data = try? Data(contentsOf: url)

@@ -15,10 +15,6 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
     var uprCd : String = ""
     var orgCd : String = ""
     
-    var careAddr = ""
-    var careAddr_utf8 = ""
-    var careTel = ""
-    
     var url : String = "http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/shelter?upr_cd="
     //"6110000&org_cd=3220000"
     
@@ -31,6 +27,7 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
     // 저장 문자열 변수
     var careNm = NSMutableString()
     var careRegNo = NSMutableString()
+    
     var list: [NSMutableString] = []
     
     var selectedRow = 0
@@ -52,11 +49,6 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
                     viewController_CatImage.orgCd = self.orgCd
                     viewController_CatImage.uprCd = self.uprCd
                     viewController_CatImage.careRegNo = self.list[selectedRow] as String
-                    
-                    print("[3] uprCd: \(uprCd)")
-                    print("[3] orgCd: \(orgCd)")
-                    print("[3] careRegNo: \(self.list[selectedRow])")
-                    print("[3] viewController_CatImage.careRegNo: \(viewController_CatImage.careRegNo)")
                     }
                 }
         }
@@ -95,9 +87,7 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
             }
         }
         
-        print("전")
         self.performSegue(withIdentifier: "segueToCatImageUrlViewController", sender: self)
-        print("후")
     }
     
     func beginParsing()
@@ -149,7 +139,7 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
             {
                 elements.setObject(careRegNo, forKey: "careRegNo" as NSCopying)
             }
-        
+            
             posts.add(elements)
         }
     }
