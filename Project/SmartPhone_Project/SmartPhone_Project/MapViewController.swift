@@ -58,8 +58,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 print(coordinate)
                 
                 centerMapOnLocation(location: initialLocation)
-                
                 mapView.delegate = self
+                
+                print("라라라")
+                print(posts)
                 
                 for post in posts {
                     let careNm = (post as AnyObject).value(forKey: "careNm") as! NSString as String
@@ -68,6 +70,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     //let YPos = (post as AnyObject).value(forKey: "YPos") as! NSString as String
                     let lat = (coordinate.latitude)
                     let lon = (coordinate.longitude)
+                    print(lat)
+                    print(lon)
                     let care = Care(title: careNm, locationName: careAddr, coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon))
                     cares.append(care)
                 }
@@ -93,6 +97,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             var view: MKPinAnnotationView
             // 2. 코드는 새로 생성하기 전에 재사용 가능한 주석 뷰를 사용할 수 있는지 먼저 확인
             if let dequeueView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
+                print("성공ㅎ")
                 dequeueView.annotation = annotation
                 view = dequeueView
             } else {

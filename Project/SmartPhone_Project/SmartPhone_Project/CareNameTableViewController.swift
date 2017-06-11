@@ -29,6 +29,7 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
     var careRegNo = NSMutableString()
     
     var list: [NSMutableString] = []
+    var careRegNos = NSMutableArray()
     
     var selectedRow = 0
     
@@ -49,6 +50,7 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
                     viewController_CatImage.orgCd = self.orgCd
                     viewController_CatImage.uprCd = self.uprCd
                     viewController_CatImage.careRegNo = self.list[selectedRow] as String
+                    viewController_CatImage.careRegNos = self.careRegNos
                     }
                 }
         }
@@ -124,6 +126,7 @@ class CareNameTableViewController: UITableViewController, XMLParserDelegate {
         else if element.isEqual(to: "careRegNo"){
             careRegNo.append(string)
             list.append(careRegNo)
+            careRegNos.add(element)
         }
     }
     

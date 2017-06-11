@@ -23,7 +23,10 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
     var resultUrl = ""
     var uprCd : String = ""
     var orgCd : String = ""
+    var careNm: String = ""
+    var careNms: [String] = []
     var careRegNo: String = ""
+    var careRegNos = NSMutableArray()
     var careAddr: String = ""
     var careAddrs: [String] = []
     var careTel: String = ""
@@ -73,6 +76,7 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
         if segue.identifier == "segueToMapview" {
             if let mapViewController = segue.destination as? MapViewController {
                 mapViewController.careAddr = self.careAddr
+                mapViewController.posts = self.posts
             }
         }
     }
@@ -113,6 +117,10 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
             imageurl.append(string)
             list.append(imageurl)
         }
+        else if element.isEqual(to: "careNm") {
+            careNm.append(string)
+            careNms.append(string)
+        }
         else if element.isEqual(to: "careAddr") {
             careAddr.append(string)
             careAddrs.append(string)
@@ -139,6 +147,9 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
             {
                 elements.setObject(imageurl, forKey: "popfile" as NSCopying)
             }
+            if !careNm.isEqual(nil) {
+                elements.setObject(careNm, forKey: "careNm" as NSCopying)
+            }
             if !careAddr.isEqual(nil)
             {
                 elements.setObject(careAddr, forKey: "careAddr" as NSCopying)
@@ -153,6 +164,7 @@ class ViewController_CatImage: UITableViewController, XMLParserDelegate {
             if !processState.isEqual(nil) {
                 elements.setObject(processState, forKey: "processState" as NSCopying)
             }
+
             posts.add(elements)
         }
     }
